@@ -1,0 +1,71 @@
+form {
+      padding: 20px;
+      background-color: #91b4b1;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #add-candy-form{
+      width: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 400px;
+    }
+  
+    label {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 1px;
+    }
+  
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 5px;
+      width: 300px;
+      font-size: 18px;
+    }
+  
+    input[type="submit"] {
+      background-color: #ff6347;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+  
+    input[type="submit"]:hover {
+      background-color: #f56a5a;
+    }
+  
+    /* Style the display */
+    #display {
+      margin-top: 10px;
+      margin-left: 400px;
+      padding: 20px;
+      background-color: #91b4b1;
+      border-radius: 10px;
+      font-size: 18px;
+      line-height: 1.5;
+      width: 500px;
+    }
+  
+    #display p {
+      margin: 10px 0;
+    }
+
+    h1{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
