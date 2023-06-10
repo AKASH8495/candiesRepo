@@ -1,120 +1,110 @@
-// Get the data from the table
+let candies = [];
 
-const form = document.getElementById('add-candy-form');
-const display = document.getElementById('display');
+async  function addCandy() {
+    // Get input values
+    const name = document.getElementById("candy-name").value;
+    const description = document.getElementById("candy-description").value;
+    const price = document.getElementById("candy-price").value;
+    const quantity = document.getElementById("candy-quantity").value;
+
+    // Create candy object
+    const candy = {
+        name: name,
+        description: description,   
+        price: price,
+        quantity: quantity
+    };
 
 
-//add eventListner
-form.addEventListener('submit', (event) =>{
-      event.preventDefault();
+    try {
+        // Send POST request to CRUD CRUD API
 
-      //get the value entrered by the user form 
-      const candyName = document.getElementById('Candy-name').value;
-      const description = document.getElementById('Description').value;
-      const price = document.getElementById('Price').value;
-      const quantity = document.getElementById('Quantity').value;
+        const response = await axios.post('https://crudcrud.com/api/978de96e7e9c4ff7b485a71d48a33801/candies', candy);
+
+        // Add candy to the list
+        candies.push(response.data);
+
+        // Clear form inputs
+        document.getElementById("add-candy-form").reset();
+
+        // Update stock list display
+        updateStockList();
+        
+    } catch (error) {
+        console.error('Error', error);
+    }
+}
 
 
-      //create new candy object
 
-      const candyItem = {
-            name: candyName,
-            description: description,
-            price: price,
-            quantity: quantity,
-      };
 
-      const candy = {
-            name,
-            description,
-            price,
-            quantity,
-      }
+function updateStockList() {
+    const stockList = document.getElementById("stock-list");
+    stockList.innerHTML = "";
 
-      //Add the candy item to display
-      display.innerHTML += `<p> Name: ${candyItem.name}, Description: ${candyItem.description}, Price: ${candyItem.price}, Quantity: ${candyItem.quantity}</p>`;
+    for (let i = 0; i < candies.length; i++) {
+        const candy = candies[i];
 
-      //also reset the form input
-      form.reset();
+        const candyItem = document.createElement("div");
+        candyItem.innerHTML = `${candy.name} - ${candy.description} - ${candy.price} - ${candy.quantity}`;
 
-      //send POST request to creat the new candy resource on the CRUD
+        // Create Buy buttons for each candy item
+        const buy1Button = document.createElement("button");
+        buy1Button.textContent = "Buy1";
+        buy1Button.addEventListener("click", function() {
+            buyCandy(i, 1);
+        });
+        candyItem.appendChild(buy1Button);
 
-       fetch(`https://crudcrud.com/api/a54a9e187be74604a8a3f971c2c1938f/candies`, {
-            method : 'POST',
-            headers: {
-                  'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(candy)
-      })
-      .then(response => response.json())
-      .then(data => {
-            console.log('Success:', data);
-            refreshCandiesDisplay();
-      })
-      .catch((error) => {
-            console.log('Error:', error);
-      });
+
+        // Button 2
+        const buy2Button = document.createElement("button");
+        buy2Button.textContent = "Buy2";
+        buy2Button.addEventListener("click", function() {
+            buyCandy(i, 2);
+        });
+        candyItem.appendChild(buy2Button);
+
+
+        // Button 3
+        const buy3Button = document.createElement("button");
+        buy3Button.textContent = "Buy3";
+        buy3Button.addEventListener("click", function() {
+            buyCandy(i, 3);
+        });
+        candyItem.appendChild(buy3Button);
+
+        stockList.appendChild(candyItem);
+    }
+}
+
+function buyCandy(index, quantity) {
+    const candy = candies[index];
+    const currentQuantity = parseInt(candy.quantity);
+
+    if (currentQuantity < quantity) {
+        alert("Not enough stock available.");
+        return;
+    } 
+
+    candy.quantity = currentQuantity - quantity;
+
+    // Update stock list display
+    updateStockList();
+}
+
+
+// To retrieve candies from the API on page load
+
+window.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await axios.get('https://crudcrud.com/api/978de96e7e9c4ff7b485a71d48a33801/candies');
+        candies = response.data;
+
+        // Update stock list display
+        updateStockList();
+    } catch (error) {
+        console.error('Error', error);
+    }
 });
 
-
- function refreshCandiesDisplay(){
-      const candyList = document.getElementById('candy-list');
-      candyList.innerHTML = '';
-
- //make a GET request to the API to retrieve the candies
-
- fetch('https://crudcrud.com/api/a54a9e187be74604a8a3f971c2c1938f/candies')
- .then(response => response.json())
- .then(candies => {
-      // Add each candy to the candy list
-      candies.forEach((candy, index) => {
-            const candyItem = document.createElement('li');
-            candyItem.textContent = `${index+1}. ${candy.name} - ${candy.description}, ${candy.price}, ${candy.quantity} left`
-            candyList.appendChild(candyItem);
-      });
- })
- .catch((error) => {
-      console.log('Error:', error);
- });
-}
-document.addEventListener('DOMContentLoaded', refreshCandiesDisplay);
-
-
-//Update a candy using the API
-
-function updateCandy(id, updateCandy){
-      //make a PUT request to the API to update the candy
-
-      fetch(`https://crudcrud.com/api/a54a9e187be74604a8a3f971c2c1938f/candies/${id}`, {
-         method: 'PUT',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify(updateCandy)   
-      })
-      .then(response => response.json())
-      .then(data => {
-            console.log('Success', data);
-            refreshCandiesDisplay();
-      })
-      .catch((error) => {
-            console.log('Error:', error);
-      })
-}
-
-
-//Delete a candy using the API
-
-function deleteCandy(id){
-      fetch(`https://crudcrud.com/api/a54a9e187be74604a8a3f971c2c1938f/candies/${id}`, {
-            method: 'DELETE'
-      })
-      .then(response => response.json())
-      .then(data => {
-            console.log('Success:', data);
-            refreshCandiesDisplay();
-      })
-      .catch((error) => {
-            console.log('Error', error);
-      })
-}

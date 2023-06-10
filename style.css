@@ -1,71 +1,58 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 form {
-      padding: 20px;
-      background-color: #91b4b1;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
 
-    #add-candy-form{
-      width: 500px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 400px;
-    }
-  
-    label {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 5px;
-      margin-bottom: 1px;
-    }
-  
-    input[type="text"],
-    input[type="number"] {
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      margin-bottom: 5px;
-      width: 300px;
-      font-size: 18px;
-    }
-  
-    input[type="submit"] {
-      background-color: #ff6347;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-  
-    input[type="submit"]:hover {
-      background-color: #f56a5a;
-    }
-  
-    /* Style the display */
-    #display {
-      margin-top: 10px;
-      margin-left: 400px;
-      padding: 20px;
-      background-color: #91b4b1;
-      border-radius: 10px;
-      font-size: 18px;
-      line-height: 1.5;
-      width: 500px;
-    }
-  
-    #display p {
-      margin: 10px 0;
-    }
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
 
-    h1{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+#stock-list {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.candy-item {
+  margin-bottom: 10px;
+}
+
+.buy-button {
+  margin-left: 10px;
+}
